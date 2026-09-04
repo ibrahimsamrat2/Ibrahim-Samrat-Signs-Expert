@@ -1,0 +1,171 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with role, contact info and settings",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "role": { "type": "string", "enum": ["buyer", "seller", "admin"] },
+        "bio": { "type": "string" },
+        "location": { "type": "string" },
+        "phone": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["userId", "email"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Digital creative asset product in the marketplace",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "shortDescription": { "type": "string" },
+        "description": { "type": "string" },
+        "category": { "type": "string" },
+        "subcategory": { "type": "string" },
+        "price": { "type": "number" },
+        "originalPrice": { "type": "number" },
+        "isFree": { "type": "boolean" },
+        "isTrending": { "type": "boolean" },
+        "isBestSeller": { "type": "boolean" },
+        "fileFormats": { "type": "string" },
+        "softwareCompatibility": { "type": "string" },
+        "dimensions": { "type": "string" },
+        "resolution": { "type": "string" },
+        "fileCount": { "type": "number" },
+        "thumbnail": { "type": "string" },
+        "previewImages": { "type": "string" },
+        "tags": { "type": "string" },
+        "creatorId": { "type": "string" },
+        "creatorName": { "type": "string" },
+        "creatorAvatar": { "type": "string" },
+        "rating": { "type": "number" },
+        "reviewCount": { "type": "number" },
+        "downloadCount": { "type": "number" },
+        "salesCount": { "type": "number" },
+        "status": { "type": "string", "enum": ["published", "draft", "pending", "rejected"] },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["title", "category", "price", "creatorId"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer purchase transaction record",
+      "type": "object",
+      "properties": {
+        "orderId": { "type": "string" },
+        "orderNumber": { "type": "string" },
+        "userId": { "type": "string" },
+        "customerName": { "type": "string" },
+        "customerEmail": { "type": "string" },
+        "country": { "type": "string" },
+        "items": { "type": "string" },
+        "totalAmount": { "type": "number" },
+        "discountAmount": { "type": "number" },
+        "paymentMethod": { "type": "string" },
+        "status": { "type": "string", "enum": ["completed", "pending", "refunded"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["orderId", "orderNumber", "userId", "totalAmount", "status"]
+    },
+    "Download": {
+      "title": "Download",
+      "description": "Authorized asset download record for purchased or free assets",
+      "type": "object",
+      "properties": {
+        "downloadId": { "type": "string" },
+        "userId": { "type": "string" },
+        "productId": { "type": "string" },
+        "productTitle": { "type": "string" },
+        "category": { "type": "string" },
+        "fileType": { "type": "string" },
+        "fileSize": { "type": "string" },
+        "downloadUrl": { "type": "string" },
+        "purchaseDate": { "type": "string" }
+      },
+      "required": ["downloadId", "userId", "productId", "productTitle"]
+    },
+    "Wishlist": {
+      "title": "Wishlist",
+      "description": "User saved favorite assets",
+      "type": "object",
+      "properties": {
+        "wishlistId": { "type": "string" },
+        "userId": { "type": "string" },
+        "productId": { "type": "string" },
+        "addedAt": { "type": "string" }
+      },
+      "required": ["wishlistId", "userId", "productId"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "Verified customer rating and review for an asset",
+      "type": "object",
+      "properties": {
+        "reviewId": { "type": "string" },
+        "productId": { "type": "string" },
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "userAvatar": { "type": "string" },
+        "rating": { "type": "number" },
+        "comment": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["reviewId", "productId", "userId", "rating", "comment"]
+    },
+    "SellerStat": {
+      "title": "SellerStat",
+      "description": "Aggregated analytics and financial summary for seller",
+      "type": "object",
+      "properties": {
+        "sellerId": { "type": "string" },
+        "totalEarnings": { "type": "number" },
+        "totalSales": { "type": "number" },
+        "totalProducts": { "type": "number" },
+        "profileViews": { "type": "number" },
+        "availableBalance": { "type": "number" },
+        "pendingBalance": { "type": "number" },
+        "totalWithdrawn": { "type": "number" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["sellerId"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile documents"
+    },
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Marketplace digital asset products"
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Customer purchase orders"
+    },
+    "/downloads/{downloadId}": {
+      "schema": "Download",
+      "description": "User digital file download licenses"
+    },
+    "/wishlists/{wishlistId}": {
+      "schema": "Wishlist",
+      "description": "User wishlist items"
+    },
+    "/reviews/{reviewId}": {
+      "schema": "Review",
+      "description": "Customer product reviews"
+    },
+    "/sellerStats/{sellerId}": {
+      "schema": "SellerStat",
+      "description": "Seller earnings and performance metrics"
+    }
+  }
+}
